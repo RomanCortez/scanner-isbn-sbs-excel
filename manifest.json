@@ -1,9 +1,0 @@
-{
-  "name":"Escáner ISBN · SBS → Excel",
-  "short_name":"ISBN SBS",
-  "start_url":"./",
-  "display":"standalone",
-  "background_color":"#f6f1e8",
-  "theme_color":"#2a2723",
-  "lang":"es-AR"
-}
