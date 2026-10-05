@@ -1,0 +1,9 @@
+{
+  "name": "Escáner ISBN SBS",
+  "short_name": "ISBN SBS",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f0e7",
+  "theme_color": "#171717",
+  "icons": []
+}
