@@ -1,13 +1,10 @@
-v5.1-excel-v3
+Escáner ISBN · Librería Hernández — versión de prueba
 
-1. Subí index.html a GitHub Pages (raíz del repositorio).
-2. No hace falta service worker.
-3. Escaneá un libro: el ISBN se agrega automáticamente a la lista local.
-4. Escaneá otro libro para continuar.
-5. Exportar Excel es la única acción que descarga el archivo.
+1. Subí index.html a la raíz del repositorio de GitHub Pages, reemplazando el anterior.
+2. Esta versión abre https://www.libreriahernandez.com.ar/ después de copiar el ISBN.
+3. El ISBN detectado se agrega a la lista local; el Excel solo se descarga al tocar Exportar Excel.
+4. Para probar la cámara, primero abrí la página en Chrome normal y no desde la app instalada.
+5. Esta compilación no registra service worker para evitar reutilizar una versión vieja en caché.
 
-Columnas: ISBN, Titulo, Autor, Editorial, Precio_SBS, SBS, Fecha.
-
-Nota: SBS no expone públicamente desde el navegador un dato de precio que podamos leer de forma confiable; por eso Precio_SBS queda preparado pero vacío. La columna SBS conserva el acceso a la consulta.
-
-Los datos se guardan en localStorage del navegador/dispositivo.
+Nota: la cámara depende del navegador y de que el sitio se abra por HTTPS y tenga permiso de cámara.
+La búsqueda abre la web de Librería Hernández; no se garantiza una búsqueda automática por ISBN dentro del sitio.

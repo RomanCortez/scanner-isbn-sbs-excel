@@ -4,14 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <meta name="theme-color" content="#2a2723">
-<meta name="description" content="Escáner ISBN para consultar libros en SBS Distribuidora.">
+<meta name="app-build" content="hernandez-camera-fix-20261005">
+<meta name="description" content="Escáner ISBN para consultar libros en Librería Hernández.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Escáner ISBN">
-<link rel="manifest" href="manifest.json">
+
 <link rel="icon" href="favicon.png">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Escáner ISBN · SBS</title>
+<title>Escáner ISBN · Librería Hernández</title>
 <style>
 :root{--ink:#292621;--ink2:#5b554d;--cream:#f6f1e8;--paper:#fffdf9;--beige:#e7dccb;--beige2:#d5c6b1;--line:#d5c9b8;--ok:#66745f;--danger:#8a6257;--scale:1}
 *{box-sizing:border-box}
@@ -48,7 +49,7 @@ body.text-large{--scale:1.12}body.text-large h1{font-size:24px}body.text-large .
 <div class="app">
 <header>
   <div class="brand"><img src="icon-192.png" alt="Logo de la librería"></div>
-  <div class="titles"><h1>Escáner ISBN</h1><div class="sub">Escaneá un libro y consultalo en SBS</div></div>
+  <div class="titles"><h1>Escáner ISBN</h1><div class="sub">Escaneá un libro y consultalo en Librería Hernández</div></div>
   <button class="header-btn" id="settingsBtn" type="button" aria-label="Abrir ajustes" title="Ajustes">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="m19.4 15 .1.1a2 2 0 0 1-2.8 2.8l-.1-.1a2 2 0 0 0-3.4 1.4v.2a2 2 0 0 1-4 0v-.2a2 2 0 0 0-3.4-1.4l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A2 2 0 0 0 3.6 12v-.2a2 2 0 0 0-2-.9 2 2 0 1 1 0-4h.2a2 2 0 0 0 1.8-2.9l-.1-.1A2 2 0 1 1 6.3 1l.1.1A2 2 0 0 0 9.8 0v-.2a2 2 0 0 1 4 0V0a2 2 0 0 0 3.4 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a2 2 0 0 0 1.4 3.4h.2a2 2 0 1 1 0 4h-.2a2 2 0 0 0-1.8 3.7Z" transform="translate(-.6 3.1) scale(.9)"/></svg>
   </button>
@@ -118,7 +119,7 @@ body.text-large{--scale:1.12}body.text-large h1{font-size:24px}body.text-large .
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script>
 (()=>{
-const SBS="https://ag.sbs.com.ar/Home/Books";
+const SBS="https://www.libreriahernandez.com.ar/";
 const $=id=>document.getElementById(id);
 const home=$('home'),settings=$('settings'),statusEl=$('status'),isbnEl=$('isbn'),resultEl=$('result'),copyOpenBtn=$('copyOpenBtn'),manualBtn=$('manualBtn'),againBtn=$('againBtn'),flashBtn=$('flashBtn'),shareBtn=$('shareBtn'),installBtn=$('installBtn'),toast=$('toast');
 const excelCount=$('excelCount'),excelList=$('excelList'),downloadExcelBtn=$('downloadExcelBtn'),clearExcelBtn=$('clearExcelBtn');
@@ -127,8 +128,8 @@ try{books=JSON.parse(localStorage.getItem('sbs-books-v3')||'[]');if(!Array.isArr
 function saveBooks(){localStorage.setItem('sbs-books-v3',JSON.stringify(books))}
 function renderBooks(){excelCount.textContent=`${books.length} ${books.length===1?'libro cargado':'libros cargados'}`;downloadExcelBtn.disabled=!books.length;clearExcelBtn.disabled=!books.length;if(!books.length){excelList.textContent='Los ISBN detectados se guardan en este teléfono. El Excel solo se descarga cuando tocás “Exportar Excel”.';return}excelList.innerHTML=books.slice(-5).reverse().map(b=>`<div class="excel-item"><span>${b.ISBN}</span><span>${(b.Titulo||'Sin título').replace(/[<>]/g,'')}</span></div>`).join('')}
 async function lookupBook(isbn){try{const r=await fetch('https://www.googleapis.com/books/v1/volumes?q=isbn:'+encodeURIComponent(isbn));const j=await r.json();const v=j.items?.[0]?.volumeInfo||{};return{Titulo:v.title||'',Autor:Array.isArray(v.authors)?v.authors.join(', '):'',Editorial:v.publisher||''}}catch{return{Titulo:'',Autor:'',Editorial:''}}}
-async function addBook(isbn){if(books.some(b=>b.ISBN===isbn)){renderBooks();toastMsg('Ese ISBN ya está cargado');return}const meta=await lookupBook(isbn);books.push({ISBN:isbn,Titulo:meta.Titulo,Autor:meta.Autor,Editorial:meta.Editorial,Precio_SBS:'',SBS:'https://ag.sbs.com.ar/Home/Books',Fecha:new Date().toLocaleString('es-AR')});saveBooks();renderBooks();toastMsg('Libro agregado a la lista')}
-function downloadExcel(){if(!books.length)return;if(!window.XLSX){toastMsg('No se pudo cargar el módulo Excel');return}const rows=books.map(b=>({ISBN:b.ISBN,Titulo:b.Titulo,Autor:b.Autor,Editorial:b.Editorial,Precio_SBS:b.Precio_SBS,SBS:b.SBS,Fecha:b.Fecha}));const ws=XLSX.utils.json_to_sheet(rows);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Libros');XLSX.writeFile(wb,'libros-sbs.xlsx');toastMsg('Excel descargado')}
+async function addBook(isbn){if(books.some(b=>b.ISBN===isbn)){renderBooks();toastMsg('Ese ISBN ya está cargado');return}const meta=await lookupBook(isbn);books.push({ISBN:isbn,Titulo:meta.Titulo,Autor:meta.Autor,Editorial:meta.Editorial,Precio_Hernandez:'',Libreria_Hernandez:'https://www.libreriahernandez.com.ar/',Fecha:new Date().toLocaleString('es-AR')});saveBooks();renderBooks();toastMsg('Libro agregado a la lista')}
+function downloadExcel(){if(!books.length)return;if(!window.XLSX){toastMsg('No se pudo cargar el módulo Excel');return}const rows=books.map(b=>({ISBN:b.ISBN,Titulo:b.Titulo,Autor:b.Autor,Editorial:b.Editorial,Precio_Hernandez:b.Precio_Hernandez,Libreria_Hernandez:b.Libreria_Hernandez,Fecha:b.Fecha}));const ws=XLSX.utils.json_to_sheet(rows);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Libros');XLSX.writeFile(wb,'libros-hernandez.xlsx');toastMsg('Excel descargado')}
 renderBooks();
 let scanner=null,currentIsbn='',starting=false,torchOn=false,deferredInstallPrompt=null,cameraFailed=false,leavingForSbs=false,shouldRestartOnShow=false,restartTimer=null,cameraRunId=0,stopPromise=null;
 function toastMsg(m){toast.textContent=m;toast.classList.add('show');clearTimeout(toastMsg.t);toastMsg.t=setTimeout(()=>toast.classList.remove('show'),2100)}
@@ -184,6 +185,7 @@ async function startScanner(){
   try{
     if(!window.Html5Qrcode)throw new Error('scanner library unavailable');
     await releaseCamera();
+    await wait(350);
     if(settings.classList.contains('active'))return;
     const thisRun=++cameraRunId;
     scanner=new Html5Qrcode('reader',{verbose:false});
@@ -234,11 +236,32 @@ function showToastCameraFallback(){toastMsg('No se pudo activar la cámara');aga
 async function toggleTorch(){try{const track=document.querySelector('#reader video')?.srcObject?.getVideoTracks?.()[0];if(!track?.getCapabilities||!('torch' in track.getCapabilities())){toastMsg('El flash no está disponible en este teléfono');return}torchOn=!torchOn;await track.applyConstraints({advanced:[{torch:torchOn}]});flashBtn.style.opacity=torchOn?'1':'.75';toastMsg(torchOn?'Flash encendido':'Flash apagado')}catch{toastMsg('No se pudo activar el flash')}}
 downloadExcelBtn.addEventListener('click',downloadExcel);
 clearExcelBtn.addEventListener('click',()=>{if(!books.length)return;if(confirm('¿Vaciar todos los libros cargados en este teléfono?')){books=[];saveBooks();renderBooks();toastMsg('Lista vaciada')}});
-copyOpenBtn.addEventListener('click',async()=>{if(!currentIsbn)return;let copied=false;try{await navigator.clipboard.writeText(currentIsbn);copied=true}catch{}leavingForSbs=true;toastMsg(copied?'ISBN copiado. Abriendo SBS…':'SBS abierto. Copiá el ISBN manualmente.');setTimeout(()=>{window.location.href=SBS},120)});
+copyOpenBtn.addEventListener('click',async()=>{if(!currentIsbn)return;let copied=false;try{await navigator.clipboard.writeText(currentIsbn);copied=true}catch{}leavingForSbs=true;toastMsg(copied?'ISBN copiado. Abriendo Librería Hernández…':'Librería Hernández abierta. Copiá el ISBN manualmente.');setTimeout(()=>{window.location.href=SBS},120)});
 manualBtn.addEventListener('click',async()=>{leavingForSbs=true;await releaseCamera();window.location.href=SBS});
-againBtn.addEventListener('click',async()=>{againBtn.disabled=true;await releaseCamera();$('reader').innerHTML='';await wait(500);againBtn.disabled=false;startScanner()});
+againBtn.addEventListener('click',async()=>{
+  if(starting)return;
+  againBtn.disabled=true;
+  setStatus('Reiniciando cámara…');
+  try{
+    currentIsbn='';
+    await releaseCamera();
+    await wait(1200);
+    $('reader').innerHTML='';
+    isbnEl.textContent='';
+    resultEl.style.display='none';
+    copyOpenBtn.disabled=true;
+    againBtn.style.display='none';
+    await wait(250);
+    await startScanner();
+  }catch(e){
+    console.error('Error reiniciando cámara:',e);
+    showToastCameraFallback();
+  }finally{
+    againBtn.disabled=false;
+  }
+});
 flashBtn.addEventListener('click',toggleTorch);
-shareBtn.addEventListener('click',async()=>{const data={title:'Escáner ISBN · SBS',text:'Escáner ISBN para consultar libros en SBS.',url:location.href};try{if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(location.href);toastMsg('Enlace copiado para compartir')}}catch{}});
+shareBtn.addEventListener('click',async()=>{const data={title:'Escáner ISBN · Librería Hernández',text:'Escáner ISBN para consultar libros en Librería Hernández.',url:location.href};try{if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(location.href);toastMsg('Enlace copiado para compartir')}}catch{}});
 $('settingsBtn').addEventListener('click',async()=>{await releaseCamera();home.classList.remove('active');settings.classList.add('active')});
 $('backBtn').addEventListener('click',async()=>{settings.classList.remove('active');home.classList.add('active');await wait(350);startScanner()});
 document.querySelectorAll('#textSize button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#textSize button').forEach(x=>x.classList.remove('active'));b.classList.add('active');const large=b.dataset.size==='large';document.body.classList.toggle('text-large',large);localStorage.setItem('isbn-text-size',large?'large':'normal');toastMsg('Tamaño actualizado')}));
