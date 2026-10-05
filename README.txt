@@ -1,5 +1,13 @@
-v2 - Escáner ISBN SBS + lista Excel
+v5.1-excel-v3
 
-Escaneá -> agregá a la lista -> escaneá el siguiente -> exportá al final.
-El botón 'Escanear otro libro' NO descarga Excel.
-El Excel incluye ISBN, título, autor, editorial, campo de precio SBS, enlace de consulta SBS y fecha. Título/autor/editorial se intentan completar automáticamente mediante Google Books; el precio SBS queda pendiente de resolver el acceso automático a los datos de SBS con sesión.
+1. Subí index.html a GitHub Pages (raíz del repositorio).
+2. No hace falta service worker.
+3. Escaneá un libro: el ISBN se agrega automáticamente a la lista local.
+4. Escaneá otro libro para continuar.
+5. Exportar Excel es la única acción que descarga el archivo.
+
+Columnas: ISBN, Titulo, Autor, Editorial, Precio_SBS, SBS, Fecha.
+
+Nota: SBS no expone públicamente desde el navegador un dato de precio que podamos leer de forma confiable; por eso Precio_SBS queda preparado pero vacío. La columna SBS conserva el acceso a la consulta.
+
+Los datos se guardan en localStorage del navegador/dispositivo.

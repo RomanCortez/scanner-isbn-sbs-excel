@@ -35,20 +35,13 @@ header{height:76px;flex:0 0 76px;display:flex;align-items:center;gap:12px;paddin
 .utility{position:absolute;top:24px;right:26px;display:flex;gap:9px;z-index:4}.circle{width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.38);background:rgba(41,38,33,.78);color:#fffdf9;display:grid;place-items:center;backdrop-filter:blur(8px)}.circle svg{width:23px;height:23px}.circle:disabled{opacity:.42}
 .info{flex:0 0 auto;padding:3px 18px 7px;text-align:center}.help{margin:0 auto;color:var(--ink2);font-size:14px;line-height:1.25;max-width:600px}.isbn-result{display:none;align-items:center;justify-content:center;gap:8px;margin:0 auto 6px;max-width:600px;padding:10px 13px;background:var(--paper);border:1px solid var(--line);border-radius:13px;font-size:17px}.isbn-result strong{font-variant-numeric:tabular-nums;letter-spacing:.04em;font-size:18px}
 .actions{flex:0 0 auto;padding:7px 14px calc(12px + env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr 1fr;gap:9px;background:var(--paper);border-top:1px solid var(--line)}
-.btn{min-height:52px;border:1px solid var(--line);border-radius:15px;background:var(--beige);color:var(--ink);font-weight:750;font-size:14px;padding:0 12px;cursor:pointer}.btn:active{transform:scale(.985)}.btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}.btn.ghost{background:var(--paper)}.btn:disabled{opacity:.45}.wide{grid-column:1/-1}.again{display:none}.install{display:none}
+.btn{min-height:52px;border:1px solid var(--line);border-radius:15px;background:var(--beige);color:var(--ink);font-weight:750;font-size:14px;padding:0 12px;cursor:pointer}.btn:active{transform:scale(.985)}.btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}.btn.ghost{background:var(--paper)}.btn:disabled{opacity:.45}.wide{grid-column:1/-1}.again{display:none}.install{display:none}.excel-panel{margin:0 14px 7px;padding:10px 12px;background:var(--paper);border:1px solid var(--line);border-radius:13px;text-align:left}.excel-row{display:flex;align-items:center;justify-content:space-between;gap:10px}.excel-count{font-size:13px;font-weight:800}.excel-actions{display:flex;gap:7px}.excel-actions button{min-height:38px;border:1px solid var(--line);border-radius:10px;background:var(--beige);color:var(--ink);font-weight:750;padding:0 10px}.excel-actions button:disabled{opacity:.45}.excel-list{margin-top:7px;max-height:70px;overflow:auto;font-size:12px;color:var(--ink2);line-height:1.45}.excel-item{display:flex;justify-content:space-between;gap:8px;border-top:1px solid var(--line);padding-top:4px;margin-top:4px}.text-large .excel-count{font-size:15px}.text-large .excel-actions button{font-size:14px}
 /* Settings */
 #settings{flex-direction:column;padding:18px;gap:12px}.settings-top{display:flex;align-items:center;gap:10px}.back{width:46px;height:46px;border:1px solid var(--line);border-radius:14px;background:var(--paper);display:grid;place-items:center;color:var(--ink)}.back svg{width:23px;height:23px}.settings-title{font-size:23px;font-weight:800}.settings-card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:16px}.setting-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:8px 0}.setting-row+.setting-row{border-top:1px solid var(--line)}.setting-label{font-size:15px;font-weight:750}.setting-desc{font-size:12px;color:var(--ink2);margin-top:3px;line-height:1.25}.seg{display:flex;border:1px solid var(--line);border-radius:12px;overflow:hidden;flex:0 0 auto}.seg button{border:0;border-left:1px solid var(--line);background:var(--cream);padding:9px 11px;font-size:12px;font-weight:750;color:var(--ink)}.seg button:first-child{border-left:0}.seg button.active{background:var(--ink);color:var(--paper)}.settings-note{margin-top:auto;padding:12px 2px;color:var(--ink2);font-size:12px;line-height:1.35;text-align:center}
 .toast{position:fixed;left:50%;bottom:94px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--ink);color:var(--paper);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:11px 14px;font-size:13px;font-weight:650;z-index:30;transition:.22s ease;white-space:nowrap}.toast.show{opacity:1;transform:translate(-50%,0)}
 body.text-large{--scale:1.12}body.text-large h1{font-size:24px}body.text-large .sub{font-size:14px}body.text-large .help{font-size:16px}body.text-large .btn{font-size:15px}body.text-large .isbn-result{font-size:18px}body.text-large .isbn-result strong{font-size:20px}
 @media (max-height:680px){header{height:66px;flex-basis:66px}.brand{width:44px;height:44px;flex-basis:44px}h1{font-size:19px}.sub{font-size:11px}.camera-area{padding:8px 10px 5px}.utility{top:17px;right:18px}.circle{width:42px;height:42px}.help{font-size:12px}.btn{min-height:45px;font-size:12px}.info{padding-bottom:4px}.isbn-result{padding:7px;font-size:14px}.isbn-result strong{font-size:15px}}
 @media (max-height:560px){.help{display:none}.info{padding:0}.actions{padding-top:5px;padding-bottom:7px}.btn{min-height:39px}.camera-area{padding-bottom:4px}}
-</style>
-
-<style>
-.excel-panel{margin-top:10px;padding:12px;border:1px solid #ded6c8;border-radius:14px;background:#fbf8f2}
-.excel-panel .excel-title{font-weight:800;font-size:14px;margin-bottom:5px}
-.excel-panel .excel-info{font-size:12px;color:var(--ink2);margin-bottom:9px}
-.excel-actions{display:flex;gap:8px;flex-wrap:wrap}.excel-actions .btn{margin:0;flex:1;min-width:145px}
 </style>
 </head>
 <body>
@@ -79,19 +72,15 @@ body.text-large{--scale:1.12}body.text-large h1{font-size:24px}body.text-large .
     <div class="isbn-result" id="result"><span>ISBN:</span><strong id="isbn"></strong></div>
     <p class="help">Apuntá al código de barras del libro y mantenelo dentro del recuadro. La app detecta el ISBN automáticamente.</p>
   </section>
+  <div class="excel-panel">
+    <div class="excel-row"><div class="excel-count" id="excelCount">0 libros cargados</div><div class="excel-actions"><button id="downloadExcelBtn" type="button" disabled>Exportar Excel</button><button id="clearExcelBtn" type="button" disabled>Vaciar</button></div></div>
+    <div class="excel-list" id="excelList">Los ISBN detectados se guardan en este teléfono. El Excel solo se descarga cuando tocás “Exportar Excel”.</div>
+  </div>
   <footer class="actions">
     <button class="btn primary" id="copyOpenBtn" type="button" disabled>Copiar ISBN y abrir SBS</button>
     <button class="btn ghost" id="manualBtn" type="button">Abrir SBS manualmente</button>
     <button class="btn ghost wide again" id="againBtn" type="button">Escanear otro libro</button>
-    <div class="excel-panel" id="excelPanel">
-  <div class="excel-title">Planilla de libros</div>
-  <div class="excel-info" id="excelInfo">0 libros registrados. Los libros se acumulan en la lista. El Excel se descarga solamente cuando vos tocás “Exportar Excel”.</div>
-  <div class="excel-actions">
-    <button class="btn primary" id="addExcelBtn" type="button" disabled>Agregar libro a la lista</button>
-    <button class="btn ghost" id="downloadExcelBtn" type="button">Exportar Excel</button>
-  </div>
-</div>
-<button class="btn ghost wide install" id="installBtn" type="button">Instalar como app</button>
+    <button class="btn ghost wide install" id="installBtn" type="button">Instalar como app</button>
   </footer>
 </main>
 
@@ -125,51 +114,22 @@ body.text-large{--scale:1.12}body.text-large h1{font-size:24px}body.text-large .
 </div>
 <div class="toast" id="toast"></div>
 
-<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script>
 (()=>{
 const SBS="https://ag.sbs.com.ar/Home/Books";
 const $=id=>document.getElementById(id);
 const home=$('home'),settings=$('settings'),statusEl=$('status'),isbnEl=$('isbn'),resultEl=$('result'),copyOpenBtn=$('copyOpenBtn'),manualBtn=$('manualBtn'),againBtn=$('againBtn'),flashBtn=$('flashBtn'),shareBtn=$('shareBtn'),installBtn=$('installBtn'),toast=$('toast');
-const addExcelBtn=$('addExcelBtn'),downloadExcelBtn=$('downloadExcelBtn'),excelInfo=$('excelInfo');
-let books=JSON.parse(localStorage.getItem('sbs-books-excel')||'[]');
-function updateExcelInfo(){excelInfo.textContent=books.length+' libro'+(books.length===1?'':'s')+' registrado'+(books.length===1?'':'s')+'. Los datos quedan guardados en este dispositivo.'}
-async function addCurrentToExcel(){
-  if(!currentIsbn)return;
-  const exists=books.some(x=>x.ISBN===currentIsbn);
-  if(exists){toastMsg('Ese ISBN ya está en la planilla');return}
-  addExcelBtn.disabled=true;
-  addExcelBtn.textContent='Buscando datos…';
-  let meta={Titulo:'',Autor:'',Editorial:''};
-  try{
-    const r=await fetch('https://www.googleapis.com/books/v1/volumes?q=isbn:'+encodeURIComponent(currentIsbn));
-    if(r.ok){
-      const j=await r.json();
-      const v=j.items?.[0]?.volumeInfo;
-      if(v){
-        meta.Titulo=v.title||'';
-        meta.Autor=(v.authors||[]).join(', ');
-        meta.Editorial=v.publisher||'';
-      }
-    }
-  }catch(e){}
-  books.push({
-    ISBN:currentIsbn,
-    Titulo:meta.Titulo,
-    Autor:meta.Autor,
-    Editorial:meta.Editorial,
-    Precio_SBS:'',
-    Consulta_SBS:SBS+'?isbn='+encodeURIComponent(currentIsbn),
-    Fecha:new Date().toLocaleString('es-AR')
-  });
-  localStorage.setItem('sbs-books-excel',JSON.stringify(books));
-  updateExcelInfo();
-  addExcelBtn.textContent='Agregar libro a la lista';
-  toastMsg(meta.Titulo?'Libro agregado con datos':'ISBN agregado; no se encontraron datos');
-}
-function downloadExcel(){if(!books.length){toastMsg('Todavía no hay libros registrados');return} const ws=XLSX.utils.json_to_sheet(books); ws['!cols']=[{wch:16},{wch:38},{wch:30},{wch:25},{wch:16},{wch:55},{wch:22}]; const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Libros'); XLSX.writeFile(wb,'libros-sbs.xlsx'); toastMsg('Excel descargado')}
-updateExcelInfo();
+const excelCount=$('excelCount'),excelList=$('excelList'),downloadExcelBtn=$('downloadExcelBtn'),clearExcelBtn=$('clearExcelBtn');
+let books=[];
+try{books=JSON.parse(localStorage.getItem('sbs-books-v3')||'[]');if(!Array.isArray(books))books=[]}catch{books=[]}
+function saveBooks(){localStorage.setItem('sbs-books-v3',JSON.stringify(books))}
+function renderBooks(){excelCount.textContent=`${books.length} ${books.length===1?'libro cargado':'libros cargados'}`;downloadExcelBtn.disabled=!books.length;clearExcelBtn.disabled=!books.length;if(!books.length){excelList.textContent='Los ISBN detectados se guardan en este teléfono. El Excel solo se descarga cuando tocás “Exportar Excel”.';return}excelList.innerHTML=books.slice(-5).reverse().map(b=>`<div class="excel-item"><span>${b.ISBN}</span><span>${(b.Titulo||'Sin título').replace(/[<>]/g,'')}</span></div>`).join('')}
+async function lookupBook(isbn){try{const r=await fetch('https://www.googleapis.com/books/v1/volumes?q=isbn:'+encodeURIComponent(isbn));const j=await r.json();const v=j.items?.[0]?.volumeInfo||{};return{Titulo:v.title||'',Autor:Array.isArray(v.authors)?v.authors.join(', '):'',Editorial:v.publisher||''}}catch{return{Titulo:'',Autor:'',Editorial:''}}}
+async function addBook(isbn){if(books.some(b=>b.ISBN===isbn)){renderBooks();toastMsg('Ese ISBN ya está cargado');return}const meta=await lookupBook(isbn);books.push({ISBN:isbn,Titulo:meta.Titulo,Autor:meta.Autor,Editorial:meta.Editorial,Precio_SBS:'',SBS:'https://ag.sbs.com.ar/Home/Books',Fecha:new Date().toLocaleString('es-AR')});saveBooks();renderBooks();toastMsg('Libro agregado a la lista')}
+function downloadExcel(){if(!books.length)return;if(!window.XLSX){toastMsg('No se pudo cargar el módulo Excel');return}const rows=books.map(b=>({ISBN:b.ISBN,Titulo:b.Titulo,Autor:b.Autor,Editorial:b.Editorial,Precio_SBS:b.Precio_SBS,SBS:b.SBS,Fecha:b.Fecha}));const ws=XLSX.utils.json_to_sheet(rows);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Libros');XLSX.writeFile(wb,'libros-sbs.xlsx');toastMsg('Excel descargado')}
+renderBooks();
 let scanner=null,currentIsbn='',starting=false,torchOn=false,deferredInstallPrompt=null,cameraFailed=false,leavingForSbs=false,shouldRestartOnShow=false,restartTimer=null,cameraRunId=0,stopPromise=null;
 function toastMsg(m){toast.textContent=m;toast.classList.add('show');clearTimeout(toastMsg.t);toastMsg.t=setTimeout(()=>toast.classList.remove('show'),2100)}
 function normalize(v){const d=String(v||'').replace(/[^0-9Xx]/g,'').toUpperCase();return d}
@@ -217,7 +177,6 @@ async function startScanner(){
   isbnEl.textContent='';
   resultEl.style.display='none';
   copyOpenBtn.disabled=true;
-  addExcelBtn.disabled=true;
   againBtn.style.display='none';
   againBtn.textContent='Escanear otro libro';
   flashBtn.disabled=true;
@@ -237,9 +196,9 @@ async function startScanner(){
       isbnEl.textContent=isbn;
       resultEl.style.display='flex';
       copyOpenBtn.disabled=false;
-      addExcelBtn.disabled=false;
       againBtn.style.display='block';
-      setStatus('ISBN detectado');
+      setStatus('ISBN detectado · guardando libro');
+      addBook(isbn);
       try{
         const video=document.querySelector('#reader video');
         if(video&&video.videoWidth&&video.videoHeight){
@@ -273,8 +232,8 @@ async function startScanner(){
 }
 function showToastCameraFallback(){toastMsg('No se pudo activar la cámara');againBtn.textContent='Reactivar cámara';againBtn.style.display='block'}
 async function toggleTorch(){try{const track=document.querySelector('#reader video')?.srcObject?.getVideoTracks?.()[0];if(!track?.getCapabilities||!('torch' in track.getCapabilities())){toastMsg('El flash no está disponible en este teléfono');return}torchOn=!torchOn;await track.applyConstraints({advanced:[{torch:torchOn}]});flashBtn.style.opacity=torchOn?'1':'.75';toastMsg(torchOn?'Flash encendido':'Flash apagado')}catch{toastMsg('No se pudo activar el flash')}}
-addExcelBtn.addEventListener('click',addCurrentToExcel);
 downloadExcelBtn.addEventListener('click',downloadExcel);
+clearExcelBtn.addEventListener('click',()=>{if(!books.length)return;if(confirm('¿Vaciar todos los libros cargados en este teléfono?')){books=[];saveBooks();renderBooks();toastMsg('Lista vaciada')}});
 copyOpenBtn.addEventListener('click',async()=>{if(!currentIsbn)return;let copied=false;try{await navigator.clipboard.writeText(currentIsbn);copied=true}catch{}leavingForSbs=true;toastMsg(copied?'ISBN copiado. Abriendo SBS…':'SBS abierto. Copiá el ISBN manualmente.');setTimeout(()=>{window.location.href=SBS},120)});
 manualBtn.addEventListener('click',async()=>{leavingForSbs=true;await releaseCamera();window.location.href=SBS});
 againBtn.addEventListener('click',async()=>{againBtn.disabled=true;await releaseCamera();$('reader').innerHTML='';await wait(500);againBtn.disabled=false;startScanner()});
@@ -340,7 +299,7 @@ window.addEventListener('pageshow',e=>{
     restartCameraAfterReturn();
   }
 });
-if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(console.error));
+// Esta versión de prueba no registra service worker para evitar que una PWA vieja muestre una interfaz en caché.
 startScanner();
 })();
 </script>
