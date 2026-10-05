@@ -85,10 +85,10 @@ body.text-large{--scale:1.12}body.text-large h1{font-size:24px}body.text-large .
     <button class="btn ghost wide again" id="againBtn" type="button">Escanear otro libro</button>
     <div class="excel-panel" id="excelPanel">
   <div class="excel-title">Planilla de libros</div>
-  <div class="excel-info" id="excelInfo">0 libros registrados. Al registrar un ISBN se guarda automáticamente en la planilla.</div>
+  <div class="excel-info" id="excelInfo">0 libros registrados. Los libros se acumulan en la lista. El Excel se descarga solamente cuando vos tocás “Exportar Excel”.</div>
   <div class="excel-actions">
-    <button class="btn primary" id="addExcelBtn" type="button" disabled>Agregar ISBN al Excel</button>
-    <button class="btn ghost" id="downloadExcelBtn" type="button">Descargar Excel</button>
+    <button class="btn primary" id="addExcelBtn" type="button" disabled>Agregar libro a la lista</button>
+    <button class="btn ghost" id="downloadExcelBtn" type="button">Exportar Excel</button>
   </div>
 </div>
 <button class="btn ghost wide install" id="installBtn" type="button">Instalar como app</button>
@@ -135,8 +135,40 @@ const home=$('home'),settings=$('settings'),statusEl=$('status'),isbnEl=$('isbn'
 const addExcelBtn=$('addExcelBtn'),downloadExcelBtn=$('downloadExcelBtn'),excelInfo=$('excelInfo');
 let books=JSON.parse(localStorage.getItem('sbs-books-excel')||'[]');
 function updateExcelInfo(){excelInfo.textContent=books.length+' libro'+(books.length===1?'':'s')+' registrado'+(books.length===1?'':'s')+'. Los datos quedan guardados en este dispositivo.'}
-function addCurrentToExcel(){if(!currentIsbn)return; const row={ISBN:currentIsbn,Titulo:'',Autor:'',Editorial:'',Precio:'',URL_SBS:SBS+'?isbn='+encodeURIComponent(currentIsbn),Fecha:new Date().toLocaleString('es-AR')}; const exists=books.some(x=>x.ISBN===currentIsbn); if(exists){toastMsg('Ese ISBN ya está en la planilla');return} books.push(row); localStorage.setItem('sbs-books-excel',JSON.stringify(books)); updateExcelInfo(); toastMsg('ISBN agregado a la planilla'); addExcelBtn.disabled=true; downloadExcel()}
-function downloadExcel(){if(!books.length){toastMsg('Todavía no hay libros registrados');return} const ws=XLSX.utils.json_to_sheet(books); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Libros'); XLSX.writeFile(wb,'libros-sbs.xlsx'); toastMsg('Excel descargado')}
+async function addCurrentToExcel(){
+  if(!currentIsbn)return;
+  const exists=books.some(x=>x.ISBN===currentIsbn);
+  if(exists){toastMsg('Ese ISBN ya está en la planilla');return}
+  addExcelBtn.disabled=true;
+  addExcelBtn.textContent='Buscando datos…';
+  let meta={Titulo:'',Autor:'',Editorial:''};
+  try{
+    const r=await fetch('https://www.googleapis.com/books/v1/volumes?q=isbn:'+encodeURIComponent(currentIsbn));
+    if(r.ok){
+      const j=await r.json();
+      const v=j.items?.[0]?.volumeInfo;
+      if(v){
+        meta.Titulo=v.title||'';
+        meta.Autor=(v.authors||[]).join(', ');
+        meta.Editorial=v.publisher||'';
+      }
+    }
+  }catch(e){}
+  books.push({
+    ISBN:currentIsbn,
+    Titulo:meta.Titulo,
+    Autor:meta.Autor,
+    Editorial:meta.Editorial,
+    Precio_SBS:'',
+    Consulta_SBS:SBS+'?isbn='+encodeURIComponent(currentIsbn),
+    Fecha:new Date().toLocaleString('es-AR')
+  });
+  localStorage.setItem('sbs-books-excel',JSON.stringify(books));
+  updateExcelInfo();
+  addExcelBtn.textContent='Agregar libro a la lista';
+  toastMsg(meta.Titulo?'Libro agregado con datos':'ISBN agregado; no se encontraron datos');
+}
+function downloadExcel(){if(!books.length){toastMsg('Todavía no hay libros registrados');return} const ws=XLSX.utils.json_to_sheet(books); ws['!cols']=[{wch:16},{wch:38},{wch:30},{wch:25},{wch:16},{wch:55},{wch:22}]; const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Libros'); XLSX.writeFile(wb,'libros-sbs.xlsx'); toastMsg('Excel descargado')}
 updateExcelInfo();
 let scanner=null,currentIsbn='',starting=false,torchOn=false,deferredInstallPrompt=null,cameraFailed=false,leavingForSbs=false,shouldRestartOnShow=false,restartTimer=null,cameraRunId=0,stopPromise=null;
 function toastMsg(m){toast.textContent=m;toast.classList.add('show');clearTimeout(toastMsg.t);toastMsg.t=setTimeout(()=>toast.classList.remove('show'),2100)}
